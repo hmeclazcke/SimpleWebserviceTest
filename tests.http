@@ -1,0 +1,61 @@
+# H2 Web Console --> http://localhost:8080/h2-console
+# JDBC URL: jdbc:h2:mem:accountsdb
+
+
+### Creates an account for Silvia
+POST http://localhost:8080/api/account
+Content-Type: application/json
+
+{
+  "holder": "Silvia",
+  "balance": 1000.00
+}
+
+### Creates an account for John
+POST http://localhost:8080/api/account
+Content-Type: application/json
+
+{
+  "holder": "John",
+  "balance": 500.00
+}
+
+### Creates an account for Peter with no balance. Triggering an error.
+POST http://localhost:8080/api/account
+Content-Type: application/json
+
+{
+  "holder": "Peter"
+}
+
+### List Accounts
+GET http://localhost:8080/api/account
+
+### Transfer: Silvia gives 100 to John
+POST http://localhost:8080/api/transfer
+Content-Type: application/json
+
+{
+  "originId": 1,
+  "destinationId": 2,
+  "amount": 100.00
+}
+
+### See result: Silvia should have 900 and John 600
+GET http://localhost:8080/api/account
+
+### Transfer with ERROR --> Insufficient funds
+POST http://localhost:8080/api/transfer
+Content-Type: application/json
+
+{
+  "originId": 1,
+  "destinationId": 2,
+  "amount": 10000.00
+}
+
+### Rollback after error: Silvia 900 and John 600 should follow
+GET http://localhost:8080/api/account
+
+### Must return: 1 COMPLETED and 1 FAILED
+GET http://localhost:8080/api/transfer
