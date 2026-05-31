@@ -2,12 +2,10 @@ package com.hmeclazcke.simplewebservicetest.controller;
 
 import com.hmeclazcke.simplewebservicetest.dto.AccountResponse;
 import com.hmeclazcke.simplewebservicetest.dto.CreateAccountRequest;
-import com.hmeclazcke.simplewebservicetest.entity.Account;
 import com.hmeclazcke.simplewebservicetest.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 // CONTROLLER:
 // This layer receives HTTP calls.

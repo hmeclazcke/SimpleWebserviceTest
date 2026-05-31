@@ -39,7 +39,7 @@ public class AccountException extends ApiException {
 
     public static AccountException holderIsRequired() {
         return new AccountException(
-                ErrorCode.INVALID_ACCOUNT,
+                ErrorCode.ACCOUNT_HOLDER_REQUIRED,
                 HttpStatus.BAD_REQUEST,
                 "Account holder is required"
         );
@@ -47,7 +47,7 @@ public class AccountException extends ApiException {
 
     public static AccountException initialBalanceIsRequired() {
         return new AccountException(
-                ErrorCode.INVALID_ACCOUNT,
+                ErrorCode.INITIAL_BALANCE_REQUIRED,
                 HttpStatus.BAD_REQUEST,
                 "Initial balance is required"
         );
@@ -55,7 +55,7 @@ public class AccountException extends ApiException {
 
     public static AccountException initialBalanceCannotBeNegative() {
         return new AccountException(
-                ErrorCode.INVALID_ACCOUNT,
+                ErrorCode.INITIAL_BALANCE_NEGATIVE,
                 HttpStatus.BAD_REQUEST,
                 "Initial balance cannot be negative"
         );

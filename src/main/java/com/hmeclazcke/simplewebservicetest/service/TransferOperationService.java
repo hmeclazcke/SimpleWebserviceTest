@@ -93,7 +93,7 @@ public class TransferOperationService {
          * the origin account must have sufficient balance.
          */
         if (origin.getBalance().compareTo(amount) < 0) {
-            throw TransferException.insufficientFunds(transferId, origin.getBalance(), amount);
+            throw TransferException.insufficientFunds(origin.getId(), origin.getBalance(), amount);
         }
 
         origin.debit(amount);

@@ -2,6 +2,7 @@ package com.hmeclazcke.simplewebservicetest.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,37 +15,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleApiException(ApiException ex) {
 
         ApiErrorResponse error = new ApiErrorResponse(
-                "API_ERROR",
+                ex.getCode().name(),
                 ex.getMessage(),
-                Map.of("status", HttpStatus.BAD_REQUEST.value())
+                ex.getDetails()
         );
 
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(ex.getStatus())
                 .body(error);
     }
 
-    @ExceptionHandler(AccountException.class)
-    public ResponseEntity<ApiErrorResponse> handleAccountException(AccountException ex) {
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidRequestBody() {
 
         ApiErrorResponse error = new ApiErrorResponse(
-                "ACCOUNT_ERROR",
-                ex.getMessage(),
-                Map.of("status", HttpStatus.BAD_REQUEST.value())
-        );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(error);
-    }
-
-    @ExceptionHandler(TransferException.class)
-    public ResponseEntity<ApiErrorResponse> handleTransferException(TransferException ex) {
-
-        ApiErrorResponse error = new ApiErrorResponse(
-                "TRANSFER_ERROR",
-                ex.getMessage(),
-                Map.of("status", HttpStatus.BAD_REQUEST.value())
+                ErrorCode.INVALID_REQUEST.name(),
+                "Invalid request body",
+                Map.of()
         );
 
         return ResponseEntity
@@ -58,7 +45,7 @@ public class GlobalExceptionHandler {
         ApiErrorResponse error = new ApiErrorResponse(
                 "INTERNAL_ERROR",
                 "Unexpected error",
-                Map.of("status", HttpStatus.BAD_REQUEST.value())
+                Map.of("status", HttpStatus.INTERNAL_SERVER_ERROR.value())
         );
 
         return ResponseEntity

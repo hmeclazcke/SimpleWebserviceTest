@@ -2,12 +2,10 @@ package com.hmeclazcke.simplewebservicetest.controller;
 
 import com.hmeclazcke.simplewebservicetest.dto.TransferRequest;
 import com.hmeclazcke.simplewebservicetest.dto.TransferResponse;
-import com.hmeclazcke.simplewebservicetest.entity.Transfer;
 import com.hmeclazcke.simplewebservicetest.service.TransferService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 // CONTROLLER:
 // Esta capa recibe llamadas HTTP.
