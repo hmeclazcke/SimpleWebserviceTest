@@ -6,10 +6,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SimpleWebserviceTestApplication {
 
-    //TODO
-//    Listo! Testear y ver los resultados JSON de las APIs
-//    Agregar JAVADOC y ver Tests tambien con JUNIT???
-
+    /*
+     * Execution flow:
+     *
+     * main()
+     *  -> SpringApplication.run(...)
+     *  -> Spring Boot starts the embedded Tomcat server
+     *
+     * Example: POST /api/account
+     *
+     * Tomcat
+     *  -> AccountController
+     *  -> AccountService
+     *  -> AccountRepository
+     *  -> JPA
+     *  -> Hibernate
+     *  -> Database ( H2 database runs in memory ) using Account entity
+     */
     public static void main(String[] args) {
         SpringApplication.run(SimpleWebserviceTestApplication.class, args);
     }
