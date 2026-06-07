@@ -6,7 +6,7 @@ The project simulates a simple banking use case with accounts and money transfer
 
 ## Tech Stack
 
-- Java 26
+- Java 21
 - Spring Boot 4
 - Spring Web MVC
 - Spring Data JPA
@@ -40,7 +40,7 @@ This is not intended to be a production-ready banking system.
 
 To run this project locally, you need:
 
-- Java 26 or compatible with the configured project version
+- Java 21 or compatible with the configured project version
 - Maven installed, or the included Maven Wrapper
 
 Verify your installation with:
