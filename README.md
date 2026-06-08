@@ -12,6 +12,9 @@ The project simulates a simple banking use case with accounts and money transfer
 - Spring Data JPA
 - Maven
 - H2 in-memory database
+- PostgreSQL
+- Docker Compose
+- Testcontainers
 - JUnit 5
 - MockMvc
 - Mockito
@@ -42,6 +45,7 @@ To run this project locally, you need:
 
 - Java 21 or compatible with the configured project version
 - Maven installed, or the included Maven Wrapper
+- Docker, if you want to run the application with PostgreSQL
 
 Verify your installation with:
 
@@ -51,6 +55,8 @@ mvn -version
 ```
 
 ## How to Run the Application
+
+By default, the application runs with an in-memory H2 database.
 
 From the project root, run:
 
@@ -70,9 +76,51 @@ The application starts on the default Spring Boot port:
 http://localhost:8080
 ```
 
+## How to Run with PostgreSQL
+
+The project includes a Docker Compose configuration for running PostgreSQL locally.
+
+Start PostgreSQL:
+
+```bash
+docker compose up -d
+```
+
+Then run the application with the `dev` profile:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+Or using the Maven Wrapper on Windows:
+
+```bash
+.\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+The `dev` profile connects to:
+
+```text
+JDBC URL: jdbc:postgresql://localhost:5432/simplewebservice
+Username: hernan
+Password: password
+```
+
+To stop PostgreSQL:
+
+```bash
+docker compose down
+```
+
+To stop PostgreSQL and remove the persisted database volume:
+
+```bash
+docker compose down -v
+```
+
 ## H2 Console
 
-The project uses an in-memory H2 database.
+By default, the project uses an in-memory H2 database.
 
 ```text
 URL: http://localhost:8080/h2-console
@@ -81,7 +129,9 @@ Username: sa
 Password: <empty>
 ```
 
-The database is recreated on each application startup.
+The H2 database is recreated on each application startup.
+
+When running with the `dev` profile, the application uses PostgreSQL instead and the H2 console is disabled.
 
 ## API Endpoints
 
@@ -185,10 +235,25 @@ Or using the Maven Wrapper on Windows:
 .\mvnw.cmd test
 ```
 
+To run the full verification lifecycle, including PostgreSQL integration tests with Testcontainers, run:
+
+```bash
+mvn verify
+```
+
+Or using the Maven Wrapper on Windows:
+
+```bash
+.\mvnw.cmd verify
+```
+
+The PostgreSQL integration tests use Testcontainers to start a temporary PostgreSQL Docker container, run the tests, and remove the container afterwards. Docker must be running for these tests.
+
 The test suite includes:
 
 - Unit tests for service-level validation
 - Integration tests using Spring Boot and MockMvc
+- PostgreSQL integration tests using Testcontainers
 - Successful account creation
 - Account validation errors
 - Successful transfers
@@ -201,6 +266,8 @@ The test suite includes:
 
 The repository includes a `tests.http` file with sample HTTP requests that can be executed from IntelliJ IDEA or another compatible HTTP client.
 
+The same requests can be used when running with either the default H2 database or the PostgreSQL `dev` profile.
+
 ## Notes
 
-This project is a backend practice project focused on Java, Spring Boot, REST APIs, persistence, transaction handling, error handling, and automated testing.
+This project is a backend practice project focused on Java, Spring Boot, REST APIs, persistence, transaction handling, error handling, automated testing, and local database setup with Docker.
